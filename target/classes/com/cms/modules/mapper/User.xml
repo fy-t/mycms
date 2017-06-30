@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cms.modules.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.cms.modules.entity.User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pwd" property="pwd"/>
+        <result column="email" property="email"/>
+        <result column="role_ids" property="roleIds"/>
+        <result column="state" property="state"/>
+        <result column="description" property="description"/>
+        <result column="createtime" property="createtime"/>
+    </resultMap>
+
+    <sql id="colums">
+        id,name,pwd,email,state,description,role_ids,createtime
+    </sql>
+
+    <sql id="from">
+        from s_sys_user
+    </sql>
+
+    <select id="query" parameterType="com.cms.modules.entity.User" resultMap="BaseResultMap">
+        select
+        <include refid="colums"/>
+        <include refid="from"/>
+        where 1=1
+        <if test="name != null">
+            and name like CONCAT('%',#{name},'%')
+        </if>
+    </select>
+</mapper>
