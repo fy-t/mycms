@@ -30,5 +30,8 @@
         <if test="name != null">
             and name like CONCAT('%',#{name},'%')
         </if>
+        <if test="id != null">
+            and id = #{id}
+        </if>
     </select>
 </mapper>
