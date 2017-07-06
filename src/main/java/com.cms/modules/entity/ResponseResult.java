@@ -1,12 +1,10 @@
 package com.cms.modules.entity;
 
 import com.cms.util.ResultEnum;
-import lombok.Data;
 
 /**
  * Created by taifuyu on 17/7/6.
  */
-@Data
 public class ResponseResult<T> {
 
     private boolean success;
@@ -15,8 +13,8 @@ public class ResponseResult<T> {
 
     private T data;
 
-    /* 不提供直接设置errorCode的接口，只能通过setErrorInfo方法设置错误信息 */
-    private String errorCode;
+    /* 不提供直接设置code的接口，只能通过setErrorInfo方法设置错误信息 */
+    private String code;
 
     private ResponseResult() {
     }
@@ -27,8 +25,33 @@ public class ResponseResult<T> {
 
 
     // 设置错误信息
-    public void setErrorInfo(ResultEnum responseErrorEnum) {
-        this.errorCode = responseErrorEnum.getCode();
-        this.message = responseErrorEnum.getMessage();
+    public void setErrorInfo(ResultEnum resultEnum) {
+        this.code = resultEnum.getCode();
+        this.message = resultEnum.getMessage();
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
 }

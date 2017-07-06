@@ -29,7 +29,7 @@ public class TestController {
         try {
             User user = new User();
             user.setId(uid);
-            return ResultGenerator.genResult(userMapper.query(user).get(0), "成功");
+            return ResultGenerator.genResult(userMapper.query(user).get(0));
         } catch (Exception e) {
             return ResultGenerator.genErrorResult(ResultEnum.INTERNAL_SERVER_ERROR);
         }
