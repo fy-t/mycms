@@ -1,4 +1,4 @@
-package com.cms.core;
+package com.cms.modules.controller;
 
 import com.cms.modules.entity.ResponseResult;
 import com.cms.util.ResultEnum;
@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +30,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ResponseResult defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-        log.error("", e);
+//        log.error("", e);
         return getResPonseResult(e);
     }
 
@@ -45,6 +48,10 @@ public class GlobalExceptionHandler {
 
         if (e instanceof java.lang.IllegalStateException) {
             return ResultGenerator.genErrorResult(ResultEnum.ILLEGAL_PARAMS);
+        }
+
+        if (e instanceof org.springframework.web.method.annotation.MethodArgumentTypeMismatchException) {
+            return ResultGenerator.genErrorResult(ResultEnum.METHOD_ARGUMENT_TYPE_MISMATCH);
         }
 
         return ResultGenerator.genErrorResult(ResultEnum.INTERNAL_SERVER_ERROR);
