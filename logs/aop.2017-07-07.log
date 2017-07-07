@@ -1,0 +1,4 @@
+2017-07-07 18:43:18 [http-nio-8888-exec-1] INFO  com.cms.core.LogService - /test,^0:0:0:0:0:0:0:1,^GET,^200,^成功,^uid=4,^5768ms
+2017-07-07 18:43:21 [http-nio-8888-exec-3] INFO  com.cms.core.LogService - /test,^0:0:0:0:0:0:0:1,^GET,^200,^成功,^uid=4,^6ms
+2017-07-07 18:43:22 [http-nio-8888-exec-5] INFO  com.cms.core.LogService - /test,^0:0:0:0:0:0:0:1,^GET,^200,^成功,^uid=4,^4ms
+2017-07-07 18:43:22 [http-nio-8888-exec-7] INFO  com.cms.core.LogService - /test,^0:0:0:0:0:0:0:1,^GET,^200,^成功,^uid=4,^5ms

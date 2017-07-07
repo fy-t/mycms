@@ -27,10 +27,12 @@ public class TestController {
     @RequestMapping("test")
     public ResponseResult test(int uid) {
         try {
+//            tese();
             User user = new User();
             user.setId(uid);
             return ResultGenerator.genResult(userMapper.query(user).get(0));
         } catch (Exception e) {
+            log.error(e.getMessage(),e);
             return ResultGenerator.genErrorResult(ResultEnum.INTERNAL_SERVER_ERROR);
         }
     }
@@ -46,4 +48,12 @@ public class TestController {
         }
         return "login";
     }
+
+    public void tese() throws Exception {
+        log.info("info log");
+        log.error("error log");
+        log.warn("warn log");
+        throw new Exception("my test exception");
+    }
+
 }

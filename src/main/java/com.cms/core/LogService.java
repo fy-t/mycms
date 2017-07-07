@@ -8,13 +8,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * 日志统一打印
+ * <p>
  * Created by taifuyu on 17/7/4.
  */
 @Aspect
@@ -22,8 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class LogService {
 
-
-    ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+    private ThreadLocal<Long> startTime = new ThreadLocal<Long>();
 
     @Pointcut("execution(public * com.cms.modules.controller..*.*(..))")
     public void webLog() {
@@ -32,24 +32,22 @@ public class LogService {
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         startTime.set(System.currentTimeMillis());
-        // 日志记录内容
     }
 
     @AfterReturning(returning = "ret", pointcut = "webLog()")
     public void doAfterReturning(Object ret) throws Throwable {
-        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
-        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
-        HttpServletRequest request = sra.getRequest();
-
-        String ip = request.getRemoteAddr();
-        // String url = request.getRequestURL().toString();
-        String method = request.getMethod();
-        String uri = request.getRequestURI();
-        String queryString = request.getQueryString();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         ResponseResult responseResult = (ResponseResult) ret;
 
-        log.info("{},^{},^{},^{},^{},^{}", uri, ip, method, responseResult.getCode(), queryString, (System.currentTimeMillis() - startTime.get()));
+        log.info("{},^{},^{},^{},^{},^{},^{}ms"
+                , request.getRequestURI()
+                , request.getRemoteAddr()
+                , request.getMethod()
+                , responseResult.getCode()
+                , responseResult.getMessage()
+                , request.getQueryString()
+                , (System.currentTimeMillis() - startTime.get()));
     }
 
 }

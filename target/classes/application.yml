@@ -1,0 +1,41 @@
+spring.application.name: mycms
+server.port: 8888
+
+#logging
+logging:
+  level: info
+  config: classpath:logback.xml
+
+#mybatis配置
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mappers/*.xml
+  type-aliases-package: org.jon.lv.domain
+
+#数据库设置
+datasource:
+  type: com.alibaba.druid.pool.DruidDataSource
+#spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+spring:
+  #不要为我们工程中的资源文件建立映射
+  resources:
+    add-mappings: false
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mycms?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+  mvc:
+    #出现错误时, 直接抛出异常
+    throw-exception-if-no-handler-found: true
+    view:
+      # 配置jsp文件的位置，默认位置为：src/main/webapp
+      prefix: /pages/
+      # 配置jsp文件的后缀
+      suffix: .jsp
+  # 文件上传大小限制
+  http:
+  multipart:
+    max-file-size: 10MB
+    max-request-size: 10MB
+    enabled: true
